@@ -15,7 +15,7 @@ public class TaskController {
 
     @GetMapping
     public Iterable<Task> all() {
-      return taskRepository.findAll();
+      return taskRepository.findAllByOrderByName();
     }
 
     @GetMapping(path = "/{id}")
