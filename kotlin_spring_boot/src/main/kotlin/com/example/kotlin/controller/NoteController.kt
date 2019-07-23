@@ -21,14 +21,15 @@ class NoteController(val noteRepository: NoteRepository) {
     fun create(@RequestBody note: Note) = noteRepository.save(note)
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody note: Note) {
-
-        val findById: Note = noteRepository.findById(id).get();
-         noteRepository.save(note)
+    fun update(@PathVariable id: Long, @RequestBody note: Note): ResponseEntity<Note>{
+        return noteRepository.findById(id).map { note ->
+             val updated: Note = note.copy(title = note.title, body = note.body);
+             ResponseEntity.ok(noteRepository.save(updated));
+         }.orElse(ResponseEntity.noContent().build())
     }
 
     @DeleteMapping("/{id}")
-    fun remove(@PathVariable id: Long) = noteRepository.delete(noteRepository.findById(id).get())
+    fun remove(@PathVariable id: Long) = noteRepository.deleteById(id)
 
 
 }
