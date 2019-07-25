@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/thymeleafe.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleafe/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Template</title>
+</head>
+<body>
+
+Report HTML
+<br/>
+<br/>
+<br/>
+
+<th:block layout:fragment="content">
+    <form th:action="@{/reports/pdf}" th:method="get">
+        <select name="estate">
+            <option>Select</option>
+            <option
+                    th:each="estate : ${estates}"
+                    th:value="${estate.id}"
+                    th:text="${estate.nome}"></option>
+        </select>
+        <button type="submit">Generate report</button>
+
+        <br/>
+        <br/>
+
+        <div>
+
+        </div>
+
+    </form>
+
+</th:block>
+</body>
+</html>
